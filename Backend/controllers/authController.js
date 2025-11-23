@@ -5,6 +5,8 @@ import User from "../models/User.js";
 // Register
 export const registerUser = async (req, res) => {
   try {
+    console.log("📥 Received registration data:", req.body);
+
     const { role, fullName, phone, email = "", licenseNumber = "", dob = "", password } = req.body;
 
     // 🧠 Validate essential fields
@@ -20,6 +22,7 @@ export const registerUser = async (req, res) => {
 
     // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
+    console.log("📥 Received registration data:", req.body);
 
     // 🧾 Create new user document
     const newUser = await User.create({
@@ -38,6 +41,7 @@ export const registerUser = async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
+    
 
     // ✅ Respond with success
     res.status(201).json({
