@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>We-Care | Digital Health Hub</title>
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+     Bootstrap JS (optional but needed for dropdowns, modals, etc.) -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>  -->
+
+</head>
+
+<body>
+    <!-- ///////////////////////////////////////////////////////////////////// NAVBAR SECTION //////////////////////////////////////////////////////////////////////////// -->
+    <nav class="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="./assets/new.jpg" alt="">
+            </a>
+
+            <div class="nav-right">
+                <ul class="nav-links">
+                    <li><a href="#">Upload Report</a></li>
+                    <li><a href="#">Chatbot</a></li>
+                    <li><a href="#">Map</a></li>
+                    <li><a href="#">Medicines</a></li>
+                </ul>
+
+                <select class="language-select">
+                    <option value="en" selected>English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="mr">Marathi</option>
+                    <option value="pn">Punjabi</option>
+                </select>
+            </div>
+
+            <div class="menu-toggle"><i class="fa-solid fa-bars"></i></div>
+        </div>
+
+        <div class="mobile-menu">
+            <ul>
+                <li><a href="#">Upload Report</a></li>
+                <li><a href="#">Chatbot</a></li>
+                <li><a href="#">Map</a></li>
+                <li><a href="#">Medicines</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- ////////////////////////////////////////////////////////// HERO SECTION //////////////////////////////////////////////////////////////////////////// -->
+    <section class="hero" id="hero">
+        <div class="container hero-container">
+            <div class="hero-text">
+                <h1>Your Health,<br> Our <span class="highlight">Priority.</span></h1>
+                <p>
+                    Connect with top specialists, manage your medical records, and get medicines delivered. Simple,
+                    secure, and fast.
+                </p>
+                <div class="hero-btns">
+                    <a href="login.html#patient-fullname" class="btn-secondary">Sign Up</a>
+                    <a href="login.html#patient-email" class="btn-primary">Log In</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="./assets/ai-in-hospitals.png" alt="Doctor Team">
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- /////////////////////////////////////////////////////////  PROCESS SECTION  /////////////////////////////////////////////////////////////////////////// -->
+    <section class="process" id="process">
+        <div class="container">
+            <div class="cta-head">
+                <h1>4 Easy Steps And Get Your Solutions</h1>
+                <p>Navigating Health Together: Your Trusted Medical Resource Medicine Meets Technology Your Online
+                    Health Hub Your Trusted Online Hub.</p>
+            </div>
+
+            <div class="process-grid">
+                <div class="process-card">
+                    <div class="step-number">01</div>
+                    <div class="icon"><i class="fa-solid fa-user-doctor icon"></i></div>
+                    <h3>Check Profile</h3>
+                    <p>Browse verified doctors, specialties, and read patient reviews.</p>
+                </div>
+                <div class="process-card">
+                    <div class="step-number">02</div>
+                    <div class="icon"><i class="fa-solid fa-comments icon"></i></div>
+                    <h3>Request Consult</h3>
+                    <p>Get personalized medical advice online from a licensed doctor.</p>
+                </div>
+                <div class="process-card">
+                    <div class="step-number">03</div>
+                    <div class="icon"><i class="fa-regular fa-calendar-days icon"></i></div>
+                    <h3>Schedule Visit</h3>
+                    <p>Book a virtual or in-person appointment at your convenience.</p>
+                </div>
+                <div class="process-card">
+                    <div class="step-number">04</div>
+                    <div class="icon"><i class="fa-regular fa-thumbs-up icon"></i></div>
+                    <h3>Get Solution</h3>
+                    <p>Receive your tailored treatment plan and health guidance.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ////////////////////////////////////////////////////////////////////  DOCTORES SECTION ///////////////////////////////////////////////////////////////////////// -->
+    <section class="doctors" id="doctors">
+        <div class="container">
+            <div class="docs-header">
+                <h3>Meet Our Team</h3>
+                <h1>Expert Specialists</h1>
+            </div>
+
+            <div class="docs-grid">
+                <div class="doc-card">
+                    <img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?auto=format&fit=crop&w=400&q=80"
+                        alt="Dr. Smith">
+                    <div class="doc-info">
+                        <h2>Dr. Sarah Smith</h2>
+                        <h3>Cardiologist</h3>
+                        <p>10+ Years Experience</p>
+                    </div>
+                </div>
+                <div class="doc-card">
+                    <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&w=400&q=80"
+                        alt="Dr. John">
+                    <div class="doc-info">
+                        <h2>Dr. John Doe</h2>
+                        <h3>Neurologist</h3>
+                        <p>8+ Years Experience</p>
+                    </div>
+                </div>
+                <div class="doc-card">
+                    <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&w=400&q=80"
+                        alt="Dr. Emily">
+                    <div class="doc-info">
+                        <h2>Dr. Emily Rose</h2>
+                        <h3>Pediatrician</h3>
+                        <p>12+ Years Experience</p>
+                    </div>
+                </div>
+                <div class="doc-card">
+                    <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&w=400&q=80"
+                        alt="Dr. Mike">
+                    <div class="doc-info">
+                        <h2>Dr. Mike Ross</h2>
+                        <h3>Dermatologist</h3>
+                        <p>6+ Years Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--////////////////////////////////////////////////////////////// REVIEWS SECTION //////////////////////////////////////////////////////////////////////////////////// -->
+    <section class="reviews-section" id="reviews">
+        <div class="container">
+            <div class="header-container">
+                <h1>Trusted by families across India</h1>
+                <div class="trustpilot-score">
+                    <span class="score">4.8/5</span>
+                    <span class="tp-star"><i class="fa-solid fa-star"></i></span>
+                    <span class="tp-brand">Trustpilot</span>
+                    <span class="review-count">| Based on 10k+ reviews</span>
+                </div>
+            </div>
+            <div class="review-box">
+                <div class="cards-container">
+                    <article class="review-card">
+                        <p class="review-text">"Absolutely life-saving app. I booked a cardiologist for my father in
+                            Mumbai
+                            while I was sitting in Bangalore. The video consultation was smooth and the doctor was very
+                            patient."</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=150&auto=format&fit=crop&q=60"
+                                alt="Rajesh">
+                            <div class="reviewer-info">
+                                <span class="name">Rajesh Kumar</span>
+                                <span class="time">2 days ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"The medicine delivery service is excellent. I live in a remote area in
+                            Himachal, and they delivered my thyroid medication within 48 hours. Great packaging too."
+                        </p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=60"
+                                alt="Priya">
+                            <div class="reviewer-info">
+                                <span class="name">Priya Sharma</span>
+                                <span class="time">1 week ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"Very easy to use interface. My mother, who is not very tech-savvy, was
+                            able
+                            to upload her blood test reports and get feedback from the doctor easily."</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60"
+                                alt="Amit">
+                            <div class="reviewer-info">
+                                <span class="name">Amit Verma</span>
+                                <span class="time">2 weeks ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"I was worried about finding a good pediatrician in Delhi. WeCare helped
+                            me
+                            find Dr. Mehta near my location. The 'Check Profile' feature is very transparent."</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=60"
+                                alt="Sneha">
+                            <div class="reviewer-info">
+                                <span class="name">Sneha Patel</span>
+                                <span class="time">3 weeks ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"Genuine doctors and genuine advice. Unlike other apps where they just
+                            want
+                            to sell tests, here the doctors actually listen. Best healthcare app in India right now."
+                        </p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1615109398623-88346a601842?w=150&auto=format&fit=crop&q=60"
+                                alt="Vikram">
+                            <div class="reviewer-info">
+                                <span class="name">Vikram Singh</span>
+                                <span class="time">1 month ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"Map integration works perfectly. It showed me the pharmacy nearest to my
+                            home in Pune that had the specific stock I needed. Very helpful support team as well."</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=150&auto=format&fit=crop&q=60"
+                                alt="Anjali">
+                            <div class="reviewer-info">
+                                <span class="name">Anjali Das</span>
+                                <span class="time">1 month ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div aria-hidden="true" class="cards-container">
+                    <article class="review-card">
+                        <p class="review-text">"Absolutely life-saving app. I booked a cardiologist for my father in
+                            Mumbai
+                            while I was sitting in Bangalore. The video consultation was smooth and the doctor was very
+                            patient."</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=150&auto=format&fit=crop&q=60"
+                                alt="Rajesh">
+                            <div class="reviewer-info">
+                                <span class="name">Rajesh Kumar</span>
+                                <span class="time">2 days ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"The medicine delivery service is excellent. I live in a remote area in
+                            Himachal, and they delivered my thyroid medication within 48 hours. Great packaging too."
+                        </p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=60"
+                                alt="Priya">
+                            <div class="reviewer-info">
+                                <span class="name">Priya Sharma</span>
+                                <span class="time">1 week ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"Very easy to use interface. My mother, who is not very tech-savvy, was
+                            able
+                            to upload her blood test reports and get feedback from the doctor easily."</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star-half-stroke"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=60"
+                                alt="Amit">
+                            <div class="reviewer-info">
+                                <span class="name">Amit Verma</span>
+                                <span class="time">2 weeks ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"I was worried about finding a good pediatrician in Delhi. WeCare helped
+                            me
+                            find Dr. Mehta near my location. The 'Check Profile' feature is very transparent."</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&auto=format&fit=crop&q=60"
+                                alt="Sneha">
+                            <div class="reviewer-info">
+                                <span class="name">Sneha Patel</span>
+                                <span class="time">3 weeks ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"Genuine doctors and genuine advice. Unlike other apps where they just
+                            want
+                            to sell tests, here the doctors actually listen. Best healthcare app in India right now."
+                        </p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1615109398623-88346a601842?w=150&auto=format&fit=crop&q=60"
+                                alt="Vikram">
+                            <div class="reviewer-info">
+                                <span class="name">Vikram Singh</span>
+                                <span class="time">1 month ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="review-card">
+                        <p class="review-text">"Map integration works perfectly. It showed me the pharmacy nearest to my
+                            home in Pune that had the specific stock I needed. Very helpful support team as well."</p>
+                        <div class="stars">
+                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                                class="fa-solid fa-star"></i>
+                        </div>
+                        <div class="reviewer-profile">
+                            <img src="https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?w=150&auto=format&fit=crop&q=60"
+                                alt="Anjali">
+                            <div class="reviewer-info">
+                                <span class="name">Anjali Das</span>
+                                <span class="time">1 month ago</span>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </section>
+
+
+    <footer class="footers">
+        <div class="container footer-container">
+            <div class="footer-logo">
+                <h2>WeCare</h2>
+                <p>Your trusted digital health companion. Making healthcare accessible to everyone, everywhere.</p>
+            </div>
+
+            <div class="footer-links">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#doctors">Our Doctors</a></li>
+                    <li><a href="#reviews">Reviews</a></li>
+                    <li><a href="#faq">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-contact">
+                <h3>Contact Us</h3>
+                <p><i class="fa-solid fa-envelope"></i> support@wecare.com</p>
+                <p><i class="fa-solid fa-phone"></i> +91 98765 43210</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 WeCare. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

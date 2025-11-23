@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Medical Map</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <style>
+        body {
+            font-family: Arial;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #map {
+            height: 550px;
+            width: 100%;
+            border: 1px solid #999;
+            border-radius: 10px;
+        }
+
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .filter-buttons button {
+            padding: 8px 12px;
+            margin: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>Nearby Medical Facilities</h2>
+
+    <div class="filter-buttons">
+        <button onclick="filterPlaces('all')">All</button>
+        <button onclick="filterPlaces('hospital')">Hospitals</button>
+        <button onclick="filterPlaces('clinic')">Clinics</button>
+        <button onclick="filterPlaces('pharmacy')">Pharmacies</button>
+        <button onclick="filterPlaces('blood_bank')">Blood Banks</button>
+    </div>
+
+    <div id="map"></div>
+
+    <script>
+        let map;
+        let userLat = null;
+        let userLon = null;
+        let markers = [];
+
+        window.onload = () => {
+            navigator.geolocation.getCurrentPosition(onSuccess, onError, {
+                enableHighAccuracy: true,
+                timeout: 10000
+            });
+        };
+
+        function onSuccess(pos) {
+            userLat = pos.coords.latitude;
+            userLon = pos.coords.longitude;
+
+            console.log("Your Coordinates:", userLat, userLon);
+
+            if (!userLat || !userLon) {
+                alert("Could not get location.");
+                return;
+            }
+
+            initMap();
+            loadPlaces("all");
+        }
+
+        function onError(err) {
+            console.error("Location error:", err);
+            alert("Error getting location: " + err.message);
+        }
+
+        function initMap() {
+            map = L.map("map").setView([userLat, userLon], 15);
+
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png")
+                .addTo(map);
+
+            L.marker([userLat, userLon])
+                .addTo(map)
+                .bindPopup("You are here")
+                .openPopup();
+        }
+
+        function filterPlaces(type) {
+            loadPlaces(type);
+        }
+
+        async function loadPlaces(type) {
+            markers.forEach(m => map.removeLayer(m));
+            markers = [];
+
+            const api = `http://localhost:5000/nearby?lat=${userLat}&lon=${userLon}${type !== "all" ? "&type=" + type : ""}`;
+
+            const res = await fetch(api);
+            const data = await res.json();
+
+            data.forEach(place => {
+                if (!place.lat || !place.lon) return;
+
+                const marker = L.marker([place.lat, place.lon])
+                    .addTo(map)
+                    .bindPopup(place.tags.name || "Unnamed");
+
+                markers.push(marker);
+            });
+        }
+    </script>
+</body>
+
+</html>

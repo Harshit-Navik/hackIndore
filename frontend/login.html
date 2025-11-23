@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare | Authentication</title>
+    <style>
+        /* CSS Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary: #2a7de1;
+            --primary-light: #e8f2ff;
+            --secondary: #34c759;
+            --secondary-light: #e8f9ed;
+            --text-dark: #333;
+            --text-light: #666;
+            --white: #fff;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            background-color: #f9fafb;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            display: flex;
+            flex-direction: row;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background-color: var(--white);
+            min-height: 600px;
+        }
+
+        /* Left Panel - Visual */
+        .visual-panel {
+            flex: 1;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80');
+            background-size: cover;
+            background-position: center;
+            color: var(--white);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .visual-panel.patient-active {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+                url('https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-icon {
+            margin-right: 10px;
+            font-size: 28px;
+        }
+
+        .visual-content {
+            z-index: 2;
+            max-width: 400px;
+        }
+
+        .visual-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            padding: 20px;
+            transition: var(--transition);
+        }
+
+        .visual-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .visual-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            transition: var(--transition);
+        }
+
+        .visual-subtitle {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            line-height: 1.5;
+        }
+
+        /* Right Panel - Forms */
+        .form-panel {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .role-toggle {
+            display: flex;
+            background-color: #f0f0f0;
+            border-radius: 50px;
+            padding: 5px;
+            margin-bottom: 30px;
+            max-width: 300px;
+        }
+
+        .role-btn {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            background: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        .role-btn.active {
+            background-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .patient-active .role-btn.active {
+            background-color: var(--secondary);
+        }
+
+        .form-toggle {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .form-toggle-btn {
+            padding: 10px 20px;
+            border: none;
+            background: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 18px;
+            position: relative;
+            color: var(--text-light);
+        }
+
+        .form-toggle-btn.active {
+            color: var(--primary);
+        }
+
+        .patient-active .form-toggle-btn.active {
+            color: var(--secondary);
+        }
+
+        .form-toggle-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--primary);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .patient-active .form-toggle-btn.active::after {
+            background-color: var(--secondary);
+        }
+
+        .form-container {
+            position: relative;
+            min-height: 450px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .form {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            transform: translateY(10px);
+        }
+
+        .form.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(42, 125, 225, 0.2);
+        }
+
+        .patient-active .form-input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 0 3px rgba(52, 199, 89, 0.2);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-input {
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .checkbox-label a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .patient-active .checkbox-label a {
+            color: var(--secondary);
+        }
+
+        .checkbox-label a:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+            margin-top: 10px;
+            background-color: var(--primary);
+            color: var(--white);
+        }
+
+        .submit-btn:hover {
+            background-color: #1e6ac8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(42, 125, 225, 0.3);
+        }
+
+        .patient-active .submit-btn {
+            background-color: var(--secondary);
+        }
+
+        .patient-active .submit-btn:hover {
+            background-color: #2da84a;
+            box-shadow: 0 4px 8px rgba(52, 199, 89, 0.3);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: var(--text-light);
+        }
+
+        .form-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .patient-active .form-footer a {
+            color: var(--secondary);
+        }
+
+        .form-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                max-width: 500px;
+            }
+
+            .visual-panel {
+                padding: 30px 20px;
+                min-height: 250px;
+            }
+
+            .visual-icon {
+                width: 100px;
+                height: 100px;
+                margin-bottom: 20px;
+            }
+
+            .visual-title {
+                font-size: 24px;
+            }
+
+            .form-panel {
+                padding: 30px 20px;
+            }
+
+            .form-container {
+                min-height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .form-panel {
+                padding: 25px 15px;
+            }
+
+            .role-toggle,
+            .form-toggle {
+                width: 100%;
+            }
+
+            .logo {
+                top: 20px;
+                left: 20px;
+                font-size: 20px;
+            }
+        }
+
+        /* Custom scrollbar for form container */
+        .form-container::-webkit-scrollbar {
+            width: 6px;
+            display: none;
+        }
+
+        .form-container::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+
+        .form-container::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Panel - Visual -->
+        <div class="visual-panel" id="visual-panel">
+            <div class="visual-content">
+                <div class="visual-icon">
+                    <!-- Doctor Icon -->
+                    <svg id="doctor-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 25L60 45H75L65 60L70 80L50 70L30 80L35 60L25 45H40L50 25Z" fill="white" />
+                        <circle cx="50" cy="50" r="5" fill="white" />
+                    </svg>
+                    <!-- Patient Icon -->
+                    <svg id="patient-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        style="display: none;">
+                        <circle cx="50" cy="35" r="15" fill="white" />
+                        <path d="M30 70C30 55 40 45 50 45C60 45 70 55 70 70V85H30V70Z" fill="white" />
+                    </svg>
+                </div>
+                <h2 class="visual-title" id="role-title">Doctor Portal</h2>
+                <p class="visual-subtitle" id="role-subtitle">Access your medical dashboard and patient records with our
+                    secure portal</p>
+            </div>
+        </div>
+
+        <!-- Right Panel - Forms -->
+        <div class="form-panel">
+            <div class="role-toggle">
+                <button class="role-btn" id="patient-role-btn">Patient</button>
+                <button class="role-btn active" id="doctor-role-btn">Doctor</button>
+            </div>
+
+            <div class="form-toggle">
+                <button class="form-toggle-btn active" id="login-toggle-btn">Login</button>
+                <button class="form-toggle-btn" id="signup-toggle-btn">Sign Up</button>
+            </div>
+
+            <div class="form-container">
+                <!-- Doctor Login Form -->
+                <form class="form active" id="doctor-login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="doctor-email">Email Address</label>
+                        <input type="email" class="form-input" id="doctor-email" placeholder="Enter your email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="doctor-password">Password</label>
+                        <input type="password" class="form-input" id="doctor-password" placeholder="Enter your password"
+                            required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" class="checkbox-input" id="remember-doctor">
+                        <label class="checkbox-label" for="remember-doctor">Remember me</label>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                    <div class="form-footer">
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                </form>
+
+                <!-- Doctor Signup Form -->
+                <form class="form" id="doctor-signup-form">
+                    <div class="form-group">
+                        <label class="form-label" for="doctor-fullname">Full Name</label>
+                        <input type="text" class="form-input" id="doctor-fullname" placeholder="Enter your full name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="doctor-signup-email">Email Address</label>
+                        <input type="email" class="form-input" id="doctor-signup-email" placeholder="Enter your email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="doctor-phone">Phone Number</label>
+                        <input type="tel" class="form-input" id="doctor-phone" placeholder="Enter your phone number"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="doctor-license">Medical License Number</label>
+                        <input type="text" class="form-input" id="doctor-license"
+                            placeholder="Enter your license number" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="doctor-signup-password">Password</label>
+                        <input type="password" class="form-input" id="doctor-signup-password"
+                            placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="doctor-confirm-password">Confirm Password</label>
+                        <input type="password" class="form-input" id="doctor-confirm-password"
+                            placeholder="Confirm your password" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" class="checkbox-input" id="doctor-terms" required>
+                        <label class="checkbox-label" for="doctor-terms">I agree to the <a href="#">Terms and
+                                Conditions</a></label>
+                    </div>
+                    <button type="submit" class="submit-btn">Create Account</button>
+                </form>
+
+                <!-- Patient Login Form -->
+                <form class="form" id="patient-login-form">
+                    <div class="form-group">
+                        <label class="form-label" for="patient-email">Email Address</label>
+                        <input type="email" class="form-input" id="patient-email" placeholder="Enter your email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="patient-password">Password</label>
+                        <input type="password" class="form-input" id="patient-password"
+                            placeholder="Enter your password" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" class="checkbox-input" id="remember-patient">
+                        <label class="checkbox-label" for="remember-patient">Remember me</label>
+                    </div>
+                    <button type="submit" class="submit-btn">Login</button>
+                    <div class="form-footer">
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                </form>
+
+                <!-- Patient Signup Form -->
+                <form class="form" id="patient-signup-form">
+                    <div class="form-group">
+                        <label class="form-label" for="patient-fullname">Full Name</label>
+                        <input type="text" class="form-input" id="patient-fullname" placeholder="Enter your full name"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="patient-signup-email">Email Address</label>
+                        <input type="email" class="form-input" id="patient-signup-email" placeholder="Enter your email"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="patient-phone">Phone Number</label>
+                        <input type="tel" class="form-input" id="patient-phone" placeholder="Enter your phone number"
+                            required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="patient-dob">Date of Birth</label>
+                        <input type="date" class="form-input" id="patient-dob" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="patient-signup-password">Password</label>
+                        <input type="password" class="form-input" id="patient-signup-password"
+                            placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="patient-confirm-password">Confirm Password</label>
+                        <input type="password" class="form-input" id="patient-confirm-password"
+                            placeholder="Confirm your password" required>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" class="checkbox-input" id="patient-terms" required>
+                        <label class="checkbox-label" for="patient-terms">I agree to the <a href="#">Terms and
+                                Conditions</a></label>
+                    </div>
+                    <button type="submit" class="submit-btn">Create Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Elements
+            const visualPanel = document.getElementById('visual-panel');
+            const roleTitle = document.getElementById('role-title');
+            const roleSubtitle = document.getElementById('role-subtitle');
+            const doctorIcon = document.getElementById('doctor-icon');
+            const patientIcon = document.getElementById('patient-icon');
+
+            const doctorRoleBtn = document.getElementById('doctor-role-btn');
+            const patientRoleBtn = document.getElementById('patient-role-btn');
+
+            const loginToggleBtn = document.getElementById('login-toggle-btn');
+            const signupToggleBtn = document.getElementById('signup-toggle-btn');
+
+            const doctorLoginForm = document.getElementById('doctor-login-form');
+            const doctorSignupForm = document.getElementById('doctor-signup-form');
+            const patientLoginForm = document.getElementById('patient-login-form');
+            const patientSignupForm = document.getElementById('patient-signup-form');
+
+            // Current state
+            let currentRole = 'doctor';
+            let currentForm = 'login';
+
+            // Role toggle functionality
+            doctorRoleBtn.addEventListener('click', function () {
+                setRole('doctor');
+            });
+
+            patientRoleBtn.addEventListener('click', function () {
+                setRole('patient');
+            });
+
+            // Form toggle functionality
+            loginToggleBtn.addEventListener('click', function () {
+                setForm('login');
+            });
+
+            signupToggleBtn.addEventListener('click', function () {
+                setForm('signup');
+            });
+
+            // Set role function
+            function setRole(role) {
+                currentRole = role;
+
+                // Update UI for role toggle
+                if (role === 'doctor') {
+                    doctorRoleBtn.classList.add('active');
+                    patientRoleBtn.classList.remove('active');
+                    visualPanel.classList.remove('patient-active');
+                    doctorIcon.style.display = 'block';
+                    patientIcon.style.display = 'none';
+                    roleTitle.textContent = 'Doctor Portal';
+                    roleSubtitle.textContent = 'Access your medical dashboard and patient records with our secure portal';
+                } else {
+                    doctorRoleBtn.classList.remove('active');
+                    patientRoleBtn.classList.add('active');
+                    visualPanel.classList.add('patient-active');
+                    doctorIcon.style.display = 'none';
+                    patientIcon.style.display = 'block';
+                    roleTitle.textContent = 'Patient Portal';
+                    roleSubtitle.textContent = 'Manage your health records and appointments with our easy-to-use platform';
+                }
+
+                // Update form visibility based on current form type
+                setForm(currentForm);
+            }
+
+            // Set form function
+            function setForm(formType) {
+                currentForm = formType;
+
+                // Update UI for form toggle
+                if (formType === 'login') {
+                    loginToggleBtn.classList.add('active');
+                    signupToggleBtn.classList.remove('active');
+                } else {
+                    loginToggleBtn.classList.remove('active');
+                    signupToggleBtn.classList.add('active');
+                }
+
+                // Hide all forms
+                doctorLoginForm.classList.remove('active');
+                doctorSignupForm.classList.remove('active');
+                patientLoginForm.classList.remove('active');
+                patientSignupForm.classList.remove('active');
+
+                // Show the appropriate form
+                if (currentRole === 'doctor') {
+                    if (formType === 'login') {
+                        doctorLoginForm.classList.add('active');
+                    } else {
+                        doctorSignupForm.classList.add('active');
+                    }
+                } else {
+                    if (formType === 'login') {
+                        patientLoginForm.classList.add('active');
+                    } else {
+                        patientSignupForm.classList.add('active');
+                    }
+                }
+            }
+
+            // Form submission handlers
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const role = currentRole === 'doctor' ? 'Doctor' : 'Patient';
+                    const action = currentForm === 'login' ? 'logged in' : 'signed up';
+                    alert(`${role} ${action} successfully! (This is a demo)`);
+                });
+            });
+
+            // Initialize with doctor login
+            setRole('doctor');
+            setForm('login');
+        });
+    </script>
+</body>
+
+</html>
