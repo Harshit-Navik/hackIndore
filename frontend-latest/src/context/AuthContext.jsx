@@ -9,27 +9,26 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token"));
 
-  useEffect(() => {
-    if (token) {
-      axios
-        .get(`${BASE_URL}/auth/me`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => setUser(res.data))
-        .catch(() => logout());
-    }
-  }, [token]);
-
-  const login = (token) => {
+  const login = (token, userData) => {
     localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(userData));
     setToken(token);
+    setUser(userData);
   };
 
   const logout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("user");
     setToken(null);
     setUser(null);
   };
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser && token) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, [token]);
 
   return (
     <AuthContext.Provider value={{ user, token, login, logout }}>

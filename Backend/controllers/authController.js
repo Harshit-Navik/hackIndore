@@ -5,26 +5,14 @@ import User from "../models/User.js";
 // Register
 export const registerUser = async (req, res) => {
   try {
-    console.log("📥 Received registration data:", req.body);
+    const { role, fullName, phone, email, licenseNumber, dob, password } = req.body;
 
-    const { role, fullName, phone, email = "", licenseNumber = "", dob = "", password } = req.body;
-
-    // 🧠 Validate essential fields
-    if (!phone || !password || !fullName || !role) {
-      return res.status(400).json({ message: "Please fill all required fields." });
-    }
-
-    // 📱 Check if user already exists by phone number
     const existingUser = await User.findOne({ phone });
-    if (existingUser) {
+    if (existingUser)
       return res.status(400).json({ message: "Phone number already registered" });
-    }
 
-    // 🔐 Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
-    console.log("📥 Received registration data:", req.body);
 
-    // 🧾 Create new user document
     const newUser = await User.create({
       role,
       fullName,
@@ -35,24 +23,21 @@ export const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
-    // 🎟️ Generate token immediately after registration (optional)
+    // ✅ Generate token directly after signup
     const token = jwt.sign(
       { id: newUser._id, role: newUser.role },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
-    
 
-    // ✅ Respond with success
     res.status(201).json({
       message: "User registered successfully",
       token,
       user: {
         id: newUser._id,
-        role: newUser.role,
         fullName: newUser.fullName,
+        role: newUser.role,
         phone: newUser.phone,
-        email: newUser.email,
       },
     });
   } catch (error) {
@@ -60,7 +45,6 @@ export const registerUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 // Login
 export const loginUser = async (req, res) => {
   try {
@@ -70,22 +54,27 @@ export const loginUser = async (req, res) => {
       return res.status(400).json({ message: "Phone and password are required" });
     }
 
-    // 🔍 Find user by phone
     const user = await User.findOne({ phone });
-    if (!user) return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-    // 🔐 Check password
+    if (!user.password) {
+      console.log("❌ User has no password in DB:", user);
+      return res.status(400).json({ message: "Invalid account. Please register again." });
+    }
+
     const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) return res.status(400).json({ message: "Invalid credentials" });
+    if (!validPassword) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
 
-    // 🧾 Generate JWT
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
 
-    // ✅ Respond
     res.status(200).json({
       message: "Login successful",
       token,
@@ -113,3 +102,16 @@ export const getUserProfile = async (req, res) => {
     res.status(500).json({ message: "Failed to load user profile" });
   }
 };
+
+// export const updateProfile = async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+//     const updateData = req.body;
+//     if (req.file) updateData.profilePic = `/uploads/${req.file.filename}`;
+
+//     const user = await User.findByIdAndUpdate(userId, updateData, { new: true });
+//     res.json({ message: "Profile updated successfully", user });
+//   } catch (err) {
+//     res.status(500).json({ message: err.message });
+//   }
+// };

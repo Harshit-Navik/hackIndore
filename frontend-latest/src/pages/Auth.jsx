@@ -48,21 +48,37 @@ export default function Auth() {
           phone: form.phone,
           password: form.password,
         });
-        login(res.data.token);
-        navigate(
-          res.data.user.role === "doctor"
-            ? "/doctor-dashboard"
-            : "/patient-dashboard"
-        );
+
+        // ✅ Save user + token both
+        login(res.data.token, res.data.user);
+
+        // ✅ Navigate after context update
+        setTimeout(() => {
+          navigate(
+            res.data.user.role === "doctor"
+              ? "/doctor-dashboard"
+              : "/patient-dashboard"
+          );
+        }, 200);
       } else {
-        await axios.post(`${BASE_URL}/auth/register`, { ...form, role });
-        setIsLogin(true);
-        setMessage("✅ Registration successful. Please login.");
+        const res = await axios.post(`${BASE_URL}/auth/register`, { ...form, role });
+
+        // ✅ Register also logs in
+        login(res.data.token, res.data.user);
+
+        setTimeout(() => {
+          navigate(
+            res.data.user.role === "doctor"
+              ? "/doctor-dashboard"
+              : "/patient-dashboard"
+          );
+        }, 200);
       }
     } catch (err) {
       setMessage(err.response?.data?.message || "Error occurred.");
     }
   };
+
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
@@ -122,7 +138,10 @@ export default function Auth() {
           {/* Auth Toggle */}
           <div className="flex justify-center mb-6">
             <button
-              onClick={() => setIsLogin(true)}
+              onClick={() => {
+                setIsLogin(true);
+                navigate("?mode=login", { replace: true }); // ✅ Update URL
+              }}
               className={`px-4 py-2 ${
                 isLogin ? "border-b-4 border-blue-500 font-semibold" : ""
               }`}
@@ -130,7 +149,10 @@ export default function Auth() {
               Login
             </button>
             <button
-              onClick={() => setIsLogin(false)}
+              onClick={() => {
+                setIsLogin(false);
+                navigate("?mode=signup", { replace: true }); // ✅ Update URL
+              }}
               className={`px-4 py-2 ${
                 !isLogin ? "border-b-4 border-blue-500 font-semibold" : ""
               }`}
@@ -138,6 +160,7 @@ export default function Auth() {
               Sign Up
             </button>
           </div>
+
 
           {/* ✅ Fixed-height form container */}
           <div
