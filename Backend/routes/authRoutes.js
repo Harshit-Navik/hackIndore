@@ -6,5 +6,7 @@ const router = express.Router();
 
 router.post("/register", registerUser);
 router.post("/login", loginUser);
+// router.put("/update-profile", verifyToken, upload.single("profilePic"), updateProfile);
+
 
 export default router;
