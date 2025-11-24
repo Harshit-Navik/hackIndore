@@ -1,4 +1,4 @@
-import DashboardNavbar from "../components/DashboardNavbar";
+import Navbar from "../components/Navbar";
 import DashboardSidebar from "../components/DashboardSidebar";
 import {
   FaHeartbeat,
@@ -26,7 +26,7 @@ import {
 } from "recharts";
 
 export default function PatientDashboard() {
-  // Health progress data
+  // --- Chart and data ---
   const healthProgress = [
     { week: "Week 1", BP: 120, Sugar: 90 },
     { week: "Week 2", BP: 118, Sugar: 95 },
@@ -36,7 +36,6 @@ export default function PatientDashboard() {
     { week: "Week 6", BP: 112, Sugar: 82 },
   ];
 
-  // Steps data
   const dailySteps = [
     { day: "Mon", steps: 4200 },
     { day: "Tue", steps: 5000 },
@@ -47,7 +46,6 @@ export default function PatientDashboard() {
     { day: "Sun", steps: 8100 },
   ];
 
-  // Fake backend data (for display)
   const appointments = [
     { doctor: "Dr. Sneha Kapoor", date: "Nov 25, 2025", status: "Upcoming" },
     { doctor: "Dr. Aryan Mehta", date: "Nov 22, 2025", status: "Completed" },
@@ -80,220 +78,262 @@ export default function PatientDashboard() {
     { goal: "Maintain sugar under 100 mg/dL", progress: 80 },
   ];
 
+  // --- Layout ---
   return (
-    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100">
-      {/* Sidebar (hidden on mobile) */}
-      <div className="hidden md:block">
-        <DashboardSidebar userRole="patient" />
-      </div>
+    <div className="min-h-screen flex flex-col bg-gray-100">
+      {/* ✅ Navbar always stays on top */}
+      <Navbar />
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col w-full">
-        <DashboardNavbar title="Patient Dashboard" />
+      {/* ✅ Sidebar + Main Content section below navbar */}
+      <div className="flex flex-1 flex-col md:flex-row">
+        {/* Sidebar */}
+        <div className="md:w-64 w-full bg-white border-r shadow-sm">
+          <DashboardSidebar userRole="patient" />
+        </div>
 
-        {/* --- Stats Cards --- */}
-        <main className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {[
-            {
-              title: "Blood Pressure",
-              value: "118/78",
-              icon: <FaHeartbeat className="text-red-600 text-3xl" />,
-              color: "bg-red-100",
-            },
-            {
-              title: "Blood Sugar",
-              value: "92 mg/dL",
-              icon: <FaTint className="text-green-600 text-3xl" />,
-              color: "bg-green-100",
-            },
-            {
-              title: "BMI",
-              value: "22.4",
-              icon: <FaWeight className="text-blue-600 text-3xl" />,
-              color: "bg-blue-100",
-            },
-            {
-              title: "Daily Steps",
-              value: "7,200",
-              icon: <FaWalking className="text-yellow-600 text-3xl" />,
-              color: "bg-yellow-100",
-            },
-            {
-              title: "Calories Burned",
-              value: "1,560 kcal",
-              icon: <FaRunning className="text-orange-500 text-3xl" />,
-              color: "bg-orange-100",
-            },
-            {
-              title: "Consultations",
-              value: "12",
-              icon: <FaStethoscope className="text-purple-600 text-3xl" />,
-              color: "bg-purple-100",
-            },
-            {
-              title: "Water Intake",
-              value: "2.8L",
-              icon: <FaTint className="text-cyan-600 text-3xl" />,
-              color: "bg-cyan-100",
-            },
-            {
-              title: "Healthy Meals",
-              value: "5/6",
-              icon: <FaAppleAlt className="text-lime-600 text-3xl" />,
-              color: "bg-lime-100",
-            },
-          ].map((card, i) => (
-            <div
-              key={i}
-              className={`p-5 rounded-xl shadow-sm ${card.color} flex items-center gap-4 hover:shadow-md transition`}
-            >
-              {card.icon}
-              <div>
-                <p className="text-gray-600 text-sm sm:text-base font-medium">{card.title}</p>
-                <p className="text-xl sm:text-2xl font-bold text-gray-800">{card.value}</p>
+        {/* Main Dashboard Content */}
+        <div className="flex-1 flex flex-col">
+          {/* --- Stats Cards --- */}
+          <main className="p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+            {[
+              {
+                title: "Blood Pressure",
+                value: "118/78",
+                icon: <FaHeartbeat className="text-red-600 text-3xl" />,
+                color: "bg-red-100",
+              },
+              {
+                title: "Blood Sugar",
+                value: "92 mg/dL",
+                icon: <FaTint className="text-green-600 text-3xl" />,
+                color: "bg-green-100",
+              },
+              {
+                title: "BMI",
+                value: "22.4",
+                icon: <FaWeight className="text-blue-600 text-3xl" />,
+                color: "bg-blue-100",
+              },
+              {
+                title: "Daily Steps",
+                value: "7,200",
+                icon: <FaWalking className="text-yellow-600 text-3xl" />,
+                color: "bg-yellow-100",
+              },
+              {
+                title: "Calories Burned",
+                value: "1,560 kcal",
+                icon: <FaRunning className="text-orange-500 text-3xl" />,
+                color: "bg-orange-100",
+              },
+              {
+                title: "Consultations",
+                value: "12",
+                icon: <FaStethoscope className="text-purple-600 text-3xl" />,
+                color: "bg-purple-100",
+              },
+              {
+                title: "Water Intake",
+                value: "2.8L",
+                icon: <FaTint className="text-cyan-600 text-3xl" />,
+                color: "bg-cyan-100",
+              },
+              {
+                title: "Healthy Meals",
+                value: "5/6",
+                icon: <FaAppleAlt className="text-lime-600 text-3xl" />,
+                color: "bg-lime-100",
+              },
+            ].map((card, i) => (
+              <div
+                key={i}
+                className={`p-5 rounded-xl shadow-sm ${card.color} flex items-center gap-4 hover:shadow-md transition`}
+              >
+                {card.icon}
+                <div>
+                  <p className="text-gray-600 text-sm sm:text-base font-medium">
+                    {card.title}
+                  </p>
+                  <p className="text-xl sm:text-2xl font-bold text-gray-800">
+                    {card.value}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </main>
+
+          {/* --- Charts --- */}
+          <section className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+                Weekly Health Progress
+              </h2>
+              <div className="w-full h-[300px] min-h-[250px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={healthProgress}>
+                    <XAxis dataKey="week" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line
+                      type="monotone"
+                      dataKey="BP"
+                      stroke="#3B82F6"
+                      strokeWidth={3}
+                      name="Blood Pressure"
+                    />
+                    <Line
+                      type="monotone"
+                      dataKey="Sugar"
+                      stroke="#EF4444"
+                      strokeWidth={3}
+                      name="Blood Sugar"
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
               </div>
             </div>
-          ))}
-        </main>
 
-        {/* --- Charts Section --- */}
-        <section className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
-              Weekly Health Progress
-            </h2>
-            <div  className="w-full h-[300px] min-h-[250px]">
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-                <LineChart data={healthProgress}>
-                  <XAxis dataKey="week" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Line type="monotone" dataKey="BP" stroke="#3B82F6" strokeWidth={3} name="Blood Pressure" />
-                  <Line type="monotone" dataKey="Sugar" stroke="#EF4444" strokeWidth={3} name="Blood Sugar" />
-                </LineChart>
-              </ResponsiveContainer>
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+                Steps This Week
+              </h2>
+              <div className="w-full h-[300px] min-h-[250px]">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={dailySteps}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="day" />
+                    <YAxis />
+                    <Tooltip />
+                    <Bar dataKey="steps" fill="#10B981" radius={[6, 6, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
             </div>
-          </div>
+          </section>
 
-          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
-              Steps This Week
-            </h2>
-            <div  className="w-full h-[300px] min-h-[250px]">
-              <ResponsiveContainer width="100%" height="100%" minWidth={0} minHeight={0}>
-                <BarChart data={dailySteps}>
-                  <CartesianGrid strokeDasharray="3 3" />
-                  <XAxis dataKey="day" />
-                  <YAxis />
-                  <Tooltip />
-                  <Bar dataKey="steps" fill="#10B981" radius={[6, 6, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          </div>
-        </section>
-
-        {/* --- Appointments + Prescriptions --- */}
-        <section className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">Appointments</h2>
-            <ul className="space-y-3">
-              {appointments.map((a, i) => (
-                <li
-                  key={i}
-                  className="flex justify-between p-3 bg-gray-50 rounded-md border-l-4 border-blue-500"
-                >
-                  <div>
-                    <p className="font-semibold">{a.doctor}</p>
-                    <p className="text-sm text-gray-500">{a.date}</p>
-                  </div>
-                  <span
-                    className={`text-sm font-semibold ${
-                      a.status === "Upcoming" ? "text-blue-600" : a.status === "Completed" ? "text-green-600" : "text-red-600"
-                    }`}
+          {/* --- Appointments + Prescriptions --- */}
+          <section className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+                Appointments
+              </h2>
+              <ul className="space-y-3">
+                {appointments.map((a, i) => (
+                  <li
+                    key={i}
+                    className="flex justify-between p-3 bg-gray-50 rounded-md border-l-4 border-blue-500"
                   >
-                    {a.status}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
+                    <div>
+                      <p className="font-semibold">{a.doctor}</p>
+                      <p className="text-sm text-gray-500">{a.date}</p>
+                    </div>
+                    <span
+                      className={`text-sm font-semibold ${
+                        a.status === "Upcoming"
+                          ? "text-blue-600"
+                          : a.status === "Completed"
+                          ? "text-green-600"
+                          : "text-red-600"
+                      }`}
+                    >
+                      {a.status}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">Prescriptions</h2>
-            <ul className="space-y-3">
-              {prescriptions.map((p, i) => (
-                <li
-                  key={i}
-                  className="flex justify-between p-3 bg-gray-50 rounded-md border-l-4 border-green-500"
-                >
-                  <div>
-                    <p className="font-semibold">{p.name}</p>
-                    <p className="text-sm text-gray-500">{p.dosage}</p>
-                  </div>
-                  <p className="text-sm text-gray-500">{p.date}</p>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+                Prescriptions
+              </h2>
+              <ul className="space-y-3">
+                {prescriptions.map((p, i) => (
+                  <li
+                    key={i}
+                    className="flex justify-between p-3 bg-gray-50 rounded-md border-l-4 border-green-500"
+                  >
+                    <div>
+                      <p className="font-semibold">{p.name}</p>
+                      <p className="text-sm text-gray-500">{p.dosage}</p>
+                    </div>
+                    <p className="text-sm text-gray-500">{p.date}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
 
-        {/* --- Reports + Goals --- */}
-        <section className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">Medical Reports</h2>
-            <ul className="space-y-3">
-              {reports.map((r, i) => (
-                <li
-                  key={i}
-                  className="flex justify-between items-center p-3 bg-gray-50 rounded-md border-l-4 border-purple-500"
-                >
-                  <div>
-                    <p className="font-semibold">{r.title}</p>
-                    <p className="text-sm text-gray-500">{r.date}</p>
-                  </div>
-                  <button className="text-blue-600 hover:underline text-sm">View</button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {/* --- Reports + Goals --- */}
+          <section className="p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+                Medical Reports
+              </h2>
+              <ul className="space-y-3">
+                {reports.map((r, i) => (
+                  <li
+                    key={i}
+                    className="flex justify-between items-center p-3 bg-gray-50 rounded-md border-l-4 border-purple-500"
+                  >
+                    <div>
+                      <p className="font-semibold">{r.title}</p>
+                      <p className="text-sm text-gray-500">{r.date}</p>
+                    </div>
+                    <button className="text-blue-600 hover:underline text-sm">
+                      View
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-          <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">Health Goals</h2>
-            <ul className="space-y-3">
-              {healthGoals.map((g, i) => (
-                <li key={i} className="p-3 bg-gray-50 rounded-md border-l-4 border-teal-500">
-                  <p className="font-semibold">{g.goal}</p>
-                  <div className="w-full bg-gray-200 h-2 rounded mt-2">
-                    <div
-                      className="bg-teal-500 h-2 rounded"
-                      style={{ width: `${g.progress}%` }}
-                    ></div>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+            <div className="bg-white p-4 sm:p-6 rounded-xl shadow-md">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+                Health Goals
+              </h2>
+              <ul className="space-y-3">
+                {healthGoals.map((g, i) => (
+                  <li
+                    key={i}
+                    className="p-3 bg-gray-50 rounded-md border-l-4 border-teal-500"
+                  >
+                    <p className="font-semibold">{g.goal}</p>
+                    <div className="w-full bg-gray-200 h-2 rounded mt-2">
+                      <div
+                        className="bg-teal-500 h-2 rounded"
+                        style={{ width: `${g.progress}%` }}
+                      ></div>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
 
-        {/* --- Reminders Section --- */}
-        <section className="p-4 sm:p-6">
-          <div className="bg-white rounded-xl shadow-md p-6">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">Daily Health Reminders</h2>
-            <ul className="space-y-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {reminders.map((r, i) => (
-                <li
-                  key={i}
-                  className="flex items-center gap-3 p-3 bg-yellow-50 rounded-md border-l-4 border-yellow-400"
-                >
-                  <FaBell className="text-yellow-500" />
-                  <span className="text-gray-700 text-sm sm:text-base">{r}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
+          {/* --- Reminders --- */}
+          <section className="p-4 sm:p-6">
+            <div className="bg-white rounded-xl shadow-md p-6">
+              <h2 className="text-lg sm:text-xl font-semibold mb-4 text-gray-700">
+                Daily Health Reminders
+              </h2>
+              <ul className="space-y-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {reminders.map((r, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-3 p-3 bg-yellow-50 rounded-md border-l-4 border-yellow-400"
+                  >
+                    <FaBell className="text-yellow-500" />
+                    <span className="text-gray-700 text-sm sm:text-base">
+                      {r}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );
