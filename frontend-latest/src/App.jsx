@@ -5,12 +5,14 @@ import DoctorDashboard from "./pages/DoctorDashboard";
 import PatientDashboard from "./pages/PatientDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
+import Api from "./pages/api";
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/auth" element={<Auth />} />
+
 
       <Route
         path="/doctor-dashboard"
@@ -35,6 +37,12 @@ export default function App() {
           <ProtectedRoute>
             <Profile />
           </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/chatbot"
+        element={
+          <Api />
         }
       />
 

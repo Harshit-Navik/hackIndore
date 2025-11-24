@@ -5,6 +5,9 @@ import tailwindcss from "@tailwindcss/vite"
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react() , tailwindcss()],
+  define: {
+    global: 'window' // treats `global` as `window` in your bundle
+  },
   server : {
     port : 5212
   }
