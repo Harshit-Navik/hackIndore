@@ -51,7 +51,7 @@ export default function Navbar() {
               </a>
             </li>
             <li>
-              <a href="#chatbot" className="hover:text-blue-600 transition">
+              <a href="/chatbot" className="hover:text-blue-600 transition">
                 Chatbot
               </a>
             </li>
@@ -115,7 +115,7 @@ export default function Navbar() {
             </li>
             <li>
               <a
-                href="#chatbot"
+                href="/chatbot"
                 className="hover:text-blue-600 transition"
                 onClick={() => setMenuOpen(false)}
               >

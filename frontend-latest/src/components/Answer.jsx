@@ -1,0 +1,27 @@
+import { Span } from "next/dist/trace";
+import { useEffect, useState } from "react"
+import { checkHeading , replaceHeadingStarts } from "../helper";
+
+const Answer = ({ans, index}) =>{
+const [heading , setHeading] = useState(false);
+const  [answer , setAnswer] = useState(ans);
+    useEffect(()=>{
+        if(checkHeading(ans)){
+            setHeading(true);
+            setAnswer(replaceHeadingStarts(ans));
+        }
+    },[])
+
+    return (
+        <>
+         {
+           index==0?<span className=" pt-2 text-xl block text-white "  >{answer}</span>:
+
+        heading ? <span className=" pt-2 text-lg block text-white "  >{answer}</span> :
+        <span className="pl-5">{answer} </span>
+    }
+        </>
+    )
+} 
+
+export default Answer
