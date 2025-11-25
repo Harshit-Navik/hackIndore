@@ -47,17 +47,17 @@ export default function Navbar() {
           <ul className="flex space-x-4 lg:space-x-6 font-medium text-gray-700">
             <li>
               <a href="#upload" className="hover:text-blue-600 transition">
-                Upload Report
+                Report Analyzer
               </a>
             </li>
             <li>
               <a href="/chatbot" className="hover:text-blue-600 transition">
-                Chatbot
+                Upchar
               </a>
             </li>
             <li>
               <a href="#map" className="hover:text-blue-600 transition">
-                Map
+                HealthMap
               </a>
             </li>
             <li>
@@ -67,6 +67,7 @@ export default function Navbar() {
             </li>
           </ul>
 
+          {/* ✅ Language Dropdown (Static) */}
           <select className="border border-gray-300 rounded-lg px-2 py-1 text-gray-700">
             <option value="en">English</option>
             <option value="hi">Hindi</option>
@@ -74,7 +75,7 @@ export default function Navbar() {
             <option value="pn">Punjabi</option>
           </select>
 
-          {/* ✅ Profile Button (only when logged in) */}
+          {/* ✅ Profile Button */}
           {isLoggedIn && (
             <button
               onClick={goToDashboard}
@@ -119,7 +120,7 @@ export default function Navbar() {
                 className="hover:text-blue-600 transition"
                 onClick={() => setMenuOpen(false)}
               >
-                Chatbot
+                Upchar
               </a>
             </li>
             <li>
@@ -141,7 +142,6 @@ export default function Navbar() {
               </a>
             </li>
 
-            {/* ✅ Profile Option (Mobile) */}
             {isLoggedIn && (
               <li>
                 <button
@@ -162,4 +162,3 @@ export default function Navbar() {
     </nav>
   );
 }
-  

@@ -6,46 +6,50 @@ import PatientDashboard from "./pages/PatientDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Profile from "./pages/Profile";
 import Api from "./pages/api";
+import Navbar from "./components/Navbar";
 
 export default function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/auth" element={<Auth />} />
+    <>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
 
 
-      <Route
-        path="/doctor-dashboard"
-        element={
-          <ProtectedRoute role="doctor">
-            <DoctorDashboard />
-          </ProtectedRoute>
-        }
-      />
+        <Route
+          path="/doctor-dashboard"
+          element={
+            <ProtectedRoute role="doctor">
+              <DoctorDashboard />
+            </ProtectedRoute>
+          }
+        />
 
-      <Route
-        path="/patient-dashboard"
-        element={
-          <ProtectedRoute role="patient">
-            <PatientDashboard />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <ProtectedRoute>
-            <Profile />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="/chatbot"
-        element={
-          <Api />
-        }
-      />
+        <Route
+          path="/patient-dashboard"
+          element={
+            <ProtectedRoute role="patient">
+              <PatientDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/chatbot"
+          element={
+            <Api />
+          }
+        />
 
-    </Routes>
+      </Routes>
+    </>
   );
 }

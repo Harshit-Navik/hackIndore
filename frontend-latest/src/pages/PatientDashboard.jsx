@@ -81,8 +81,6 @@ export default function PatientDashboard() {
   // --- Layout ---
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      {/* ✅ Navbar always stays on top */}
-      <Navbar />
 
       {/* ✅ Sidebar + Main Content section below navbar */}
       <div className="flex flex-1 flex-col md:flex-row">
