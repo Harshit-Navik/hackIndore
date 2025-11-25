@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
+import chatbotRoutes from "./routes/chatbotRoutes.js";
+
 
 dotenv.config();
 const app = express();
@@ -18,6 +20,7 @@ mongoose
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api", chatbotRoutes);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

@@ -7,24 +7,45 @@ export const useSpeechToText = (onResult) => {
   const startListening = () => {
     const SpeechRecognition =
       window.SpeechRecognition || window.webkitSpeechRecognition;
+
     if (!SpeechRecognition) {
-      alert("Speech Recognition not supported in this browser.");
+      alert("❌ Speech Recognition not supported in this browser.");
       return;
     }
 
     if (!recognitionRef.current) {
-      recognitionRef.current = new SpeechRecognition();
-      recognitionRef.current.continuous = false;
-      recognitionRef.current.interimResults = false;
-      recognitionRef.current.lang = "en-IN";
-      recognitionRef.current.onresult = (event) => {
+      const recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = "en-IN";
+
+      recognition.onstart = () => {
+        console.log("🎙️ Listening...");
+      };
+
+      recognition.onresult = (event) => {
         const text = event.results[0][0].transcript;
+        console.log("✅ Heard:", text);
         onResult(text);
       };
-      recognitionRef.current.onerror = (err) => console.error(err);
+
+      recognition.onerror = (event) => {
+        console.error("⚠️ Speech Recognition Error:", event.error);
+        alert("Microphone error: " + event.error);
+      };
+
+      recognition.onend = () => {
+        console.log("🛑 Stopped listening.");
+      };
+
+      recognitionRef.current = recognition;
     }
 
-    recognitionRef.current.start();
+    try {
+      recognitionRef.current.start();
+    } catch (err) {
+      console.error("Cannot start speech recognition:", err);
+    }
   };
 
   return { startListening };

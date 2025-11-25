@@ -48,8 +48,8 @@ export default function DoctorDashboard() {
   ];
 
   const appointmentStatus = [
-    { name: "Completed", value: 54 },
-    { name: "Upcoming", value: 30 },
+    { name: "Completed", value: 162 },
+    { name: "Upcoming", value: 18 },
     { name: "Cancelled", value: 10 },
   ];
 
@@ -83,8 +83,6 @@ export default function DoctorDashboard() {
   // ✅ Layout starts here
   return (
     <div className="min-h-screen flex flex-col bg-gray-100">
-      {/* ✅ Navbar always at top */}
-      <Navbar />
 
       {/* ✅ Main body with sidebar below navbar */}
       <div className="flex flex-1 flex-col md:flex-row">
